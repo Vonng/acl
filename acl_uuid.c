@@ -163,13 +163,13 @@ static void
 format_who(StringInfo out, intptr_t opaque)
 {
 	appendStringInfoString(out, DatumGetCString(DirectFunctionCall1(
-										uuid_out, UUIDPGetDatum(opaque))));
+										uuid_out, UUIDPGetDatum((const pg_uuid_t *) opaque))));
 }
 
 static AclEntryBase *
 extract_acl_entry_base(void *entry)
 {
-	return &((AclEntryUUID *) entry)->base;
+	return &((AclEntryUUID *UUIDPGetDatum) entry)->base;
 }
 
 static bool
